@@ -61,4 +61,4 @@ server.on('listening', () => {
   console.log(`server listening ${address.address}:${address.port}`);
 });
 
-server.bind(argv.port, "localhost");
+server.bind(argv.port);
