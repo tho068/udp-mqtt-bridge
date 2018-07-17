@@ -12,6 +12,7 @@
   "dependencies": {
     "adm-zip": "^0.4.11",
     "aws-iot-device-sdk": "^2.2.1",
+    "crypto": "^1.0.1",
     "mic-sdk-js": "0.0.2",
     "minimist": "^1.2.0"
   }

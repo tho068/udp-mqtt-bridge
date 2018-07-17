@@ -25,15 +25,29 @@ server.on('message', (msg, rinfo) => {
         return
     }
 
+    if(typeof data.auth == 'undefined'){
+      // Missing auth
+      return
+    }
+
     utils.isValidCert(argv.path, data.thingName)
-      .then(() => {
-        // Send response
-        utils.sendMessage(data.thingName, data, argv.path)
+      .then(async () => {
+        let verified = await utils.verifyMessage(data.auth, data.thingName, argv.path)
+        if(verified== true){
+          // Send response
+          delete data.auth
+          utils.sendMessage(data.thingName, data, argv.path)
+        }
       })
       .catch(e => {
         utils.getCertificate(argv.username, argv.password, data.thingName, argv.path)
-        .then(() => {
-          utils.sendMessage(data.thingName, data, argv.path)
+        .then(async () => {
+          let verified = await utils.verifyMessage(data.auth, data.thingName, argv.path)
+          if(verified == true){
+            // Send response
+            delete data.auth
+            utils.sendMessage(data.thingName, data, argv.path)
+          }
         })
       })
   } catch(e) {
@@ -47,4 +61,4 @@ server.on('listening', () => {
   console.log(`server listening ${address.address}:${address.port}`);
 });
 
-server.bind(argv.port);
+server.bind(argv.port, "localhost");

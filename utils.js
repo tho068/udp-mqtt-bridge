@@ -2,6 +2,7 @@ const mic = require('mic-sdk-js').default
 const fs = require('fs')
 const AdmZip = require('adm-zip')
 const awsIot = require('aws-iot-device-sdk')
+const crypto = require('crypto');
 
 function fixPath(str){
     if(str.substr(-1) === '/') {
@@ -79,9 +80,9 @@ module.exports = {
     sendMessage: (thingName, payload, path) => {
         try {
             var device = awsIot.device({
-                keyPath: `${path}/${thingName}/privkey.pem`,
-                certPath: `${path}/${thingName}/cert.pem`,
-                caPath: `${path}/ca.txt`,
+                keyPath: `${fixPath(path)}/${thingName}/privkey.pem`,
+                certPath: `${fixPath(path)}/${thingName}/cert.pem`,
+                caPath: `${fixPath(path)}/ca.txt`,
                 clientId: thingName,
                 host: 'a3k7odshaiipe8.iot.eu-west-1.amazonaws.com'
             });
@@ -107,5 +108,27 @@ module.exports = {
         } catch(e) {
             console.log(e)
         }
-    }
+    },
+
+    /* Verify the device publishing a message to MIC */
+    verifyMessage: (hash, thingName, path) => {
+        return new Promise((Resolve, Reject) => {
+            try{
+                if(hash == null){
+                    Resolve(false)
+                    return
+                }
+                fs.readFile(`${fixPath(path)}/${thingName}/pubkey.pem`, function(err, data){
+                    let match = crypto.createHash('md5').update(data).digest("hex")
+                    if( hash === match ){
+                        Resolve(true)
+                        return
+                    }
+                    Resolve(false)
+                })
+            } catch(e){
+                Reject(e)
+            }
+        })
+    },
 }
