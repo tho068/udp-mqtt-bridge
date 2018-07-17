@@ -6,7 +6,7 @@ UDP to Mqtt bridge for Telenor Managed IoT Cloud
 
 ### Installing the required npm modules
 
-npm run dev
+npm install
 
 ### Starting the application
 
