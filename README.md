@@ -10,7 +10,7 @@ npm install
 
 ### Starting the application
 
-node index.js --username <mic username> --password <mic password> --port <udp port> --path <path to cert folder>
+node index.js --username "mic username" --password "mic password" --port "udp port" --path "path to cert folder"
   
 ### Sending authenticated messages
 
