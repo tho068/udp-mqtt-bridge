@@ -19,6 +19,7 @@ Send a JSON payload containing the following required parameteres
 ```javascript
 {
   "auth": "MD5 hash of public key",
-  "thingName": "MIC thing name"
+  "thingName": "MIC thing name",
+  ...optionalParams
 }
 ```
