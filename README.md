@@ -17,6 +17,6 @@ node index.js --username <mic username> --password <mic password> --port <udp po
 Send a JSON payload containing the following required parameteres
 
 {
-  "auth": <MD5 hash of public key>,
-  "thingName": <MIC thing name>
+  "auth": "MD5 hash of public key",
+  "thingName": "MIC thing name"
 }
