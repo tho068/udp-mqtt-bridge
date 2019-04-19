@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "adm-zip": "^0.4.11",
+    "adm-zip": "^0.4.13",
     "aws-iot-device-sdk": "^2.2.1",
     "crypto": "^1.0.1",
     "mic-sdk-js": "0.0.2",
